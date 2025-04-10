@@ -1,31 +1,35 @@
 /* if you want to have a UI to look at while it is being scrapped */
-
-/* const fs = require("fs");
-  const { Builder, By } = require("selenium-webdriver");
-  async function runScraper() {
-   const driver = await new Builder().forBrowser("chrome").build(); */
-
-/* headless mode */
 const fs = require("fs");
 const { Builder, By } = require("selenium-webdriver");
-const chrome = require("selenium-webdriver/chrome");
-
 async function runScraper() {
-  const options = new chrome.Options();
-  options.addArguments(
-    "--headless",
-    "--disable-gpu",
-    "--window-size=1920,1080"
-  );
+  console.log("script has started \n");
+  const driver = await new Builder().forBrowser("chrome").build();
+  const url = "https://www.1mg.com/";
 
-  const driver = await new Builder()
-    .forBrowser("chrome")
-    .setChromeOptions(options)
-    .build();
+  /* headless mode */
+
+  // const fs = require("fs");
+  // const { Builder, By } = require("selenium-webdriver");
+  // const chrome = require("selenium-webdriver/chrome");
+
+  // async function runScraper() {
+  // console.log("script has started \n");
+  //   const options = new chrome.Options();
+  //   options.addArguments(
+  //     "--headless",
+  //     "--disable-gpu",
+  //     "--window-size=1920,1080"
+  //   );
+
+  //   const driver = await new Builder()
+  //     .forBrowser("chrome")
+  //     .setChromeOptions(options)
+  //     .build();
+
   const input = JSON.parse(fs.readFileSync("input.json", "utf-8"));
 
   try {
-    await driver.get("https://www.1mg.com/");
+    await driver.get(url);
     await driver.sleep(2000);
 
     // Close login popup
@@ -46,19 +50,23 @@ async function runScraper() {
       await driver.sleep(1000);
     } catch {}
 
-    // Locate search bar once
-    const searchBar = await driver.findElement(By.id("srchBarShwInfo"));
-
-    // for (const item of input) {
-    for (const item of input.slice(0, 10)) {
+    for (const item of input.slice(0, 3)) {
       const query = item.GenericName;
       console.log(`Searching: ${query}`);
 
       try {
-        // Clear and type new query
-        await searchBar.clear();
+        //? Clear and type new query
+        // await searchBar.clear();
+        // await driver.sleep(500);
+        // await searchBar.sendKeys(query);
+        // await driver.sleep(1000);
+
+        //? Reload page before each query
+        await driver.get(url);
+        await driver.sleep(500);
+        const searchBar = await driver.findElement(By.id("srchBarShwInfo"));
         await searchBar.sendKeys(query);
-        await driver.sleep(2000);
+        await driver.sleep(1000);
 
         try {
           const priceElem = await driver.findElement(
