@@ -19,12 +19,51 @@ It fetches public drug pricing information from [1mg.com](https://www.1mg.com) b
 
 ## 🛠 How to Use
 
-### 1. Install Dependencies
+### 1. Install Google Chrome
+
+Make sure Google Chrome is installed on your PC.  
+Download it from: [https://www.google.com/chrome/](https://www.google.com/chrome/)
+
+---
+
+### 2. Install ChromeDriver
+
+ChromeDriver must match your installed version of Chrome.
+
+#### Steps:
+
+1. **Check your Chrome version:**
+
+   - Open Chrome and go to: `chrome://settings/help`
+
+2. **Download the matching ChromeDriver:**
+
+   - Go to: [https://chromedriver.chromium.org/downloads](https://chromedriver.chromium.org/downloads)
+   - Download the version that matches your Chrome version.
+   - Extract the ZIP file.
+
+3. **Set up ChromeDriver:**
+
+   - **Windows:** Place `chromedriver.exe` in your project root OR add its location to the System `PATH`.
+   - **macOS/Linux:** Move `chromedriver` to `/usr/local/bin/` using:
+
+     ```bash
+     sudo mv chromedriver /usr/local/bin/
+     ```
+
+4. **Verify installation:**
+
+   ```bash
+   chromedriver --version
+   ```
+
+### 3. Install Dependencies
 
 ```bash
 npm Install
 ```
-### 2. Give input
+
+### 4. Give input
 
 add a input.json file in the root directory
 
@@ -36,7 +75,7 @@ add a input.json file in the root directory
 
 ```
 
-### 3. Run the program
+### 5. Run the program
 
 ```
 node runscrapper.js
